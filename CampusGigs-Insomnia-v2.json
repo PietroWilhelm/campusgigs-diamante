@@ -1,0 +1,663 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: CampusGigs API - Projeto Diamante
+meta:
+  id: wrk_86cb439d3c4a4678970676d156762e02
+  created: 1789599359007
+  modified: 1789599359007
+  description: ""
+collection:
+  - name: 02 - Servicos (Publicar / Listar / Editar / Encerrar)
+    meta:
+      id: fld_067b5daf17714649bffd1f85c5214a08
+      created: 1789596537848
+      modified: 1789596537848
+      sortKey: -4000
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/servicos/{{ _.servico_id }}"
+        name: Editar Servico - Maria (dona)
+        meta:
+          id: req_00d875ab999c4a9a95770ed2947fc888
+          created: 1789596537848
+          modified: 1789600062239
+          isPrivate: false
+          description: "Autenticacao e Autorizacao: 'Um usuario so edita ou encerra os
+            proprios servicos'."
+          sortKey: -5800
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "titulo": "Aulas de Calculo I e II",
+              "descricao": "Reforco para provas e listas, agora com Calculo II",
+              "categoria": "Tutoria",
+              "preco": 60.0
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6Im1hcmlhQGZpYXAuY29tLmJyIiwibm9tZSI6Ik1hcmlhIFNvdXphIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDcxNzEsImlhdCI6MTc4OTU5OTk3MX0.M3FjO8nGuaLT9Xwutoq4RQHGDErbCED69hU9nOfAZcK_ZsKTN4-B9NaJ1eCQ_Qsz7nep1Umb6FFs7joCz8Ql0nNfyfkKJdEa7WTDjO6ZXuhm7Izra7pDpZcg-srdVpkN1950d-lSMyzlcIX7kxpBgJcwKbUXW80x4_bIbw6EKVJXZx8OoTyNnNMwJXK3Gr2WKTSzWoISp4oOU_oBW8zjx8XfUlpmK1DsrPtlIfYNy3eHMrBhIQs7R1lCVO6oxu7GWGHVouRtUZNlmKLECorlPOxatxmGpbVp-PrClgKPzzKVnt8yzLNpwTyfN0xeAQr121_hCQq9Xw07GnHzSg1Vtg
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos"
+        name: Publicar Servico auxiliar (para encerrar depois)
+        meta:
+          id: req_2766f59cba2f40d0b1086efc9d39258a
+          created: 1789596537848
+          modified: 1789600053998
+          isPrivate: false
+          description: Servico auxiliar so para o cenario 'contratar servico encerrado'.
+            Guarde o id em servico_encerrado_id e depois encerre ele.
+          sortKey: -5950
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "titulo": "Design de Logo",
+              "descricao": "Criacao de identidade visual simples",
+              "categoria": "Design",
+              "preco": 80.0
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6Im1hcmlhQGZpYXAuY29tLmJyIiwibm9tZSI6Ik1hcmlhIFNvdXphIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDcxNzEsImlhdCI6MTc4OTU5OTk3MX0.M3FjO8nGuaLT9Xwutoq4RQHGDErbCED69hU9nOfAZcK_ZsKTN4-B9NaJ1eCQ_Qsz7nep1Umb6FFs7joCz8Ql0nNfyfkKJdEa7WTDjO6ZXuhm7Izra7pDpZcg-srdVpkN1950d-lSMyzlcIX7kxpBgJcwKbUXW80x4_bIbw6EKVJXZx8OoTyNnNMwJXK3Gr2WKTSzWoISp4oOU_oBW8zjx8XfUlpmK1DsrPtlIfYNy3eHMrBhIQs7R1lCVO6oxu7GWGHVouRtUZNlmKLECorlPOxatxmGpbVp-PrClgKPzzKVnt8yzLNpwTyfN0xeAQr121_hCQq9Xw07GnHzSg1Vtg
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos/{{ _.servico_id }}/encerrar"
+        name: Encerrar Servico - Admin (qualquer um)
+        meta:
+          id: req_29e85b73cdf0421687b71e9b58e234c7
+          created: 1789596537848
+          modified: 1789600073352
+          isPrivate: false
+          description: "Autenticacao e Autorizacao: 'excecao um ADMIN, que pode encerrar
+            qualquer um'. Alternativa ao request anterior."
+          sortKey: -5500
+        method: POST
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6Im1hcmlhQGZpYXAuY29tLmJyIiwibm9tZSI6Ik1hcmlhIFNvdXphIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDcxNzEsImlhdCI6MTc4OTU5OTk3MX0.M3FjO8nGuaLT9Xwutoq4RQHGDErbCED69hU9nOfAZcK_ZsKTN4-B9NaJ1eCQ_Qsz7nep1Umb6FFs7joCz8Ql0nNfyfkKJdEa7WTDjO6ZXuhm7Izra7pDpZcg-srdVpkN1950d-lSMyzlcIX7kxpBgJcwKbUXW80x4_bIbw6EKVJXZx8OoTyNnNMwJXK3Gr2WKTSzWoISp4oOU_oBW8zjx8XfUlpmK1DsrPtlIfYNy3eHMrBhIQs7R1lCVO6oxu7GWGHVouRtUZNlmKLECorlPOxatxmGpbVp-PrClgKPzzKVnt8yzLNpwTyfN0xeAQr121_hCQq9Xw07GnHzSg1Vtg
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos/{{ _.servico_encerrado_id }}/encerrar"
+        name: Encerrar Servico auxiliar - Maria
+        meta:
+          id: req_40aea3121f9f460b8b5021dd46a3d3cd
+          created: 1789596537848
+          modified: 1789600066125
+          isPrivate: false
+          description: Encerra o servico auxiliar de Design de Logo, usado depois no
+            cenario 'contratar servico encerrado'.
+          sortKey: -5700
+        method: POST
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6Im1hcmlhQGZpYXAuY29tLmJyIiwibm9tZSI6Ik1hcmlhIFNvdXphIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDcxNzEsImlhdCI6MTc4OTU5OTk3MX0.M3FjO8nGuaLT9Xwutoq4RQHGDErbCED69hU9nOfAZcK_ZsKTN4-B9NaJ1eCQ_Qsz7nep1Umb6FFs7joCz8Ql0nNfyfkKJdEa7WTDjO6ZXuhm7Izra7pDpZcg-srdVpkN1950d-lSMyzlcIX7kxpBgJcwKbUXW80x4_bIbw6EKVJXZx8OoTyNnNMwJXK3Gr2WKTSzWoISp4oOU_oBW8zjx8XfUlpmK1DsrPtlIfYNy3eHMrBhIQs7R1lCVO6oxu7GWGHVouRtUZNlmKLECorlPOxatxmGpbVp-PrClgKPzzKVnt8yzLNpwTyfN0xeAQr121_hCQq9Xw07GnHzSg1Vtg
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos/{{ _.servico_id }}/encerrar"
+        name: Encerrar Servico - Maria (dona)
+        meta:
+          id: req_8de9c3f46d5a46e1aa73175211792ab5
+          created: 1789596537848
+          modified: 1789600069956
+          isPrivate: false
+          description: "Regras de Negocio: dono pode encerrar seu proprio servico. Rode
+            por ultimo, depois de testar contratacao."
+          sortKey: -5600
+        method: POST
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6Im1hcmlhQGZpYXAuY29tLmJyIiwibm9tZSI6Ik1hcmlhIFNvdXphIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDcxNzEsImlhdCI6MTc4OTU5OTk3MX0.M3FjO8nGuaLT9Xwutoq4RQHGDErbCED69hU9nOfAZcK_ZsKTN4-B9NaJ1eCQ_Qsz7nep1Umb6FFs7joCz8Ql0nNfyfkKJdEa7WTDjO6ZXuhm7Izra7pDpZcg-srdVpkN1950d-lSMyzlcIX7kxpBgJcwKbUXW80x4_bIbw6EKVJXZx8OoTyNnNMwJXK3Gr2WKTSzWoISp4oOU_oBW8zjx8XfUlpmK1DsrPtlIfYNy3eHMrBhIQs7R1lCVO6oxu7GWGHVouRtUZNlmKLECorlPOxatxmGpbVp-PrClgKPzzKVnt8yzLNpwTyfN0xeAQr121_hCQq9Xw07GnHzSg1Vtg
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos"
+        name: Publicar Servico - Maria
+        meta:
+          id: req_ea8140ffaf17432db42efa73a85acc51
+          created: 1789596537848
+          modified: 1789600321013
+          isPrivate: false
+          description: "Requisitos Funcionais: 'Publicar um servico (freela)'. Qualquer
+            usuario autenticado pode publicar. Guarde o id retornado em
+            servico_id."
+          sortKey: -6000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "titulo": "Aulas de Calculo I",
+              "descricao": "Reforco para provas e listas",
+              "categoria": "Tutoria",
+              "preco": 50.0
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6Im1hcmlhQGZpYXAuY29tLmJyIiwibm9tZSI6Ik1hcmlhIFNvdXphIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDcxNzEsImlhdCI6MTc4OTU5OTk3MX0.M3FjO8nGuaLT9Xwutoq4RQHGDErbCED69hU9nOfAZcK_ZsKTN4-B9NaJ1eCQ_Qsz7nep1Umb6FFs7joCz8Ql0nNfyfkKJdEa7WTDjO6ZXuhm7Izra7pDpZcg-srdVpkN1950d-lSMyzlcIX7kxpBgJcwKbUXW80x4_bIbw6EKVJXZx8OoTyNnNMwJXK3Gr2WKTSzWoISp4oOU_oBW8zjx8XfUlpmK1DsrPtlIfYNy3eHMrBhIQs7R1lCVO6oxu7GWGHVouRtUZNlmKLECorlPOxatxmGpbVp-PrClgKPzzKVnt8yzLNpwTyfN0xeAQr121_hCQq9Xw07GnHzSg1Vtg
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos"
+        name: Listar Servicos (publico)
+        meta:
+          id: req_f19e911716014aa1a8bf38d7a2a8ffea
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: "Requisitos Funcionais: 'Listar os servicos publicados'. Nao exige
+            token."
+          sortKey: -5900
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: 00 - Cadastro (Requisitos Funcionais)
+    meta:
+      id: fld_0e62614d412a4dfe8d78aa743b270271
+      created: 1789596537848
+      modified: 1789596537848
+      sortKey: -6000
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/usuarios"
+        name: Cadastrar Usuario - Maria
+        meta:
+          id: req_569ca69cf4c24e85a1bd4eabddc83d2e
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: "Requisitos Funcionais: 'Cadastrar um novo usuario (com senha)'.
+            Publico. Dispara a integracao ViaCEP (Integracao Externa -
+            HttpExchange)."
+          sortKey: -6000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Maria Souza",
+              "email": "maria@fiap.com.br",
+              "senha": "123456",
+              "cep": "01310930"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuarios"
+        name: "Cadastrar Usuario - Email duplicado (esperado: 400)"
+        meta:
+          id: req_80f7b2fcb4c8428fa5113e61ebde860b
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: "Rode depois de 'Cadastrar Usuario - Maria'. Regra de negocio: nao
+            pode haver dois usuarios com o mesmo e-mail."
+          sortKey: -5700
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Maria Souza",
+              "email": "maria@fiap.com.br",
+              "senha": "123456",
+              "cep": "01310930"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuarios"
+        name: "Cadastrar Usuario - CEP invalido (esperado: 400)"
+        meta:
+          id: req_a8104b9bb07a4ec78d2c23366c666042
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: "Integracao Externa - HttpExchange: CEP inexistente deve retornar
+            erro claro (400), sem salvar cadastro incompleto."
+          sortKey: -5800
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Teste CEP",
+              "email": "teste.cep@fiap.com.br",
+              "senha": "123456",
+              "cep": "00000000"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/usuarios"
+        name: Cadastrar Usuario - Joao
+        meta:
+          id: req_bce529c19ec7499e82359ce15b2927bf
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: Segundo usuario, necessario para testar contratacao (ninguem pode
+            contratar o proprio servico).
+          sortKey: -5900
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nome": "Joao Pereira",
+              "email": "joao@fiap.com.br",
+              "senha": "123456",
+              "cep": "20040020"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: 03 - Contratacoes
+    meta:
+      id: fld_24264e04de6b48ffa47d429eee33f0bb
+      created: 1789596537848
+      modified: 1789596537848
+      sortKey: -3000
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/servicos/{{ _.servico_id }}/contratacoes"
+        name: Contratar Servico - Joao (sucesso)
+        meta:
+          id: req_a71e5573411546749f365454c60ed295
+          created: 1789596537848
+          modified: 1789600473631
+          isPrivate: false
+          description: "Requisitos Funcionais: 'Contratar um servico (usuario
+            autenticado)'. Joao nao e o dono, entao deve funcionar (201)."
+          sortKey: -6000
+        method: POST
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6ImpvYW9AZmlhcC5jb20uYnIiLCJub21lIjoiSm9hbyBQZXJlaXJhIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDY2MDMsImlhdCI6MTc4OTU5OTQwM30.KsEljmy7Io2AyNN8OiL6LBbH0grP2KUGysgcqn_CWLMm41x09xakTkXlAOB7H0fgNkX1ZKMUD2BixqM9vxUJuJ_82MIPN_6aPB58UFd3IH_9fo8di6M528BVOykvlV1zpAH9FwLdo6LrSuKQ_z_0iTM1SKu8d6yIYzFUoL2Am7kY3wU0lI-KHZGKswkjdkpUSt5F7rs-UWGFd2l_0CNITaj_aBnuYttnsA8-gMFjDEL85k4YClU_L2RmhWKigUMrEesju3-gHtVvi74MKxHtWVJCHEZpSY_5grvKtCCu8ZNDQrcEBQMBPqnH63opeLHvOVaM7bhJaKGAXnAZez958w
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: 04 - Cenarios de erro (evidencia - autorizacao e regras de negocio)
+    meta:
+      id: fld_c6169bc821c141479434da9ed5170aa4
+      created: 1789596537848
+      modified: 1789596537848
+      sortKey: -2000
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/servicos"
+        name: "Publicar Servico com token invalido (esperado: 401)"
+        meta:
+          id: req_71a45c2369624e6298ffd2b507163148
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: Token corrompido/invalido deve ser rejeitado (401), nao 500.
+          sortKey: -5900
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "titulo": "Servico com token invalido",
+              "descricao": "Nao deveria ser criado",
+              "categoria": "Teste",
+              "preco": 10.0
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: token-invalido-de-propositoxyz
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos/{{ _.servico_id }}/encerrar"
+        name: "Encerrar Servico - Joao (nao-dono, nao-ADMIN) (esperado: 403)"
+        meta:
+          id: req_77ca7e6a048842c58f7a383ac9cd35ce
+          created: 1789596537848
+          modified: 1789600742656
+          isPrivate: false
+          description: "Autenticacao e Autorizacao: acesso negado por papel. Essa e a
+            evidencia pedida na secao Entrega do PDF."
+          sortKey: -5800
+        method: POST
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6ImpvYW9AZmlhcC5jb20uYnIiLCJub21lIjoiSm9hbyBQZXJlaXJhIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDY2MDMsImlhdCI6MTc4OTU5OTQwM30.KsEljmy7Io2AyNN8OiL6LBbH0grP2KUGysgcqn_CWLMm41x09xakTkXlAOB7H0fgNkX1ZKMUD2BixqM9vxUJuJ_82MIPN_6aPB58UFd3IH_9fo8di6M528BVOykvlV1zpAH9FwLdo6LrSuKQ_z_0iTM1SKu8d6yIYzFUoL2Am7kY3wU0lI-KHZGKswkjdkpUSt5F7rs-UWGFd2l_0CNITaj_aBnuYttnsA8-gMFjDEL85k4YClU_L2RmhWKigUMrEesju3-gHtVvi74MKxHtWVJCHEZpSY_5grvKtCCu8ZNDQrcEBQMBPqnH63opeLHvOVaM7bhJaKGAXnAZez958w
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos"
+        name: "Publicar Servico sem token (esperado: 401)"
+        meta:
+          id: req_7e069a7e6704487690d3aaa60a54a061
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: "Autenticacao e Autorizacao: 'Um usuario nao autenticado nao acessa
+            nenhuma operacao que altera dados'."
+          sortKey: -6000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "titulo": "Servico sem autenticacao",
+              "descricao": "Nao deveria ser criado",
+              "categoria": "Teste",
+              "preco": 10.0
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos/{{ _.servico_id }}/contratacoes"
+        name: "Contratar o proprio servico - Maria (esperado: 400)"
+        meta:
+          id: req_861fcca0879a4d1ca878e608146791ad
+          created: 1789596537848
+          modified: 1789600768680
+          isPrivate: false
+          description: "Autenticacao e Autorizacao: 'Um usuario nao pode contratar o
+            proprio servico'."
+          sortKey: -5700
+        method: POST
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6ImpvYW9AZmlhcC5jb20uYnIiLCJub21lIjoiSm9hbyBQZXJlaXJhIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDY2MDMsImlhdCI6MTc4OTU5OTQwM30.KsEljmy7Io2AyNN8OiL6LBbH0grP2KUGysgcqn_CWLMm41x09xakTkXlAOB7H0fgNkX1ZKMUD2BixqM9vxUJuJ_82MIPN_6aPB58UFd3IH_9fo8di6M528BVOykvlV1zpAH9FwLdo6LrSuKQ_z_0iTM1SKu8d6yIYzFUoL2Am7kY3wU0lI-KHZGKswkjdkpUSt5F7rs-UWGFd2l_0CNITaj_aBnuYttnsA8-gMFjDEL85k4YClU_L2RmhWKigUMrEesju3-gHtVvi74MKxHtWVJCHEZpSY_5grvKtCCu8ZNDQrcEBQMBPqnH63opeLHvOVaM7bhJaKGAXnAZez958w
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/servicos/{{ _.servico_encerrado_id }}/contratacoes"
+        name: "Contratar servico encerrado (esperado: 400)"
+        meta:
+          id: req_c48fafba85784cadaa4ad0076c31c5f5
+          created: 1789596537848
+          modified: 1789600782314
+          isPrivate: false
+          description: "Regras de Negocio: 'Tentar contratar um servico que nao esta ativo
+            deve ser rejeitado'. Rode depois de encerrar o servico auxiliar."
+          sortKey: -5600
+        method: POST
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJjYW1wdXNnaWdzLWFwaSIsInN1YiI6ImpvYW9AZmlhcC5jb20uYnIiLCJub21lIjoiSm9hbyBQZXJlaXJhIiwicm9sZSI6IlVTRVIiLCJleHAiOjE3ODk2MDY2MDMsImlhdCI6MTc4OTU5OTQwM30.KsEljmy7Io2AyNN8OiL6LBbH0grP2KUGysgcqn_CWLMm41x09xakTkXlAOB7H0fgNkX1ZKMUD2BixqM9vxUJuJ_82MIPN_6aPB58UFd3IH_9fo8di6M528BVOykvlV1zpAH9FwLdo6LrSuKQ_z_0iTM1SKu8d6yIYzFUoL2Am7kY3wU0lI-KHZGKswkjdkpUSt5F7rs-UWGFd2l_0CNITaj_aBnuYttnsA8-gMFjDEL85k4YClU_L2RmhWKigUMrEesju3-gHtVvi74MKxHtWVJCHEZpSY_5grvKtCCu8ZNDQrcEBQMBPqnH63opeLHvOVaM7bhJaKGAXnAZez958w
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: 01 - Autenticacao (JWT)
+    meta:
+      id: fld_e0143e81cbe54e7b802280115edf1a5a
+      created: 1789596537848
+      modified: 1789596537848
+      sortKey: -5000
+      description: ""
+    children:
+      - url: "{{ _.base_url }}/login"
+        name: Login - Maria
+        meta:
+          id: req_002654c56789466a827d6e0bf37ebd16
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: "Requisitos Funcionais: 'Autenticar um usuario e obter um token de
+            acesso'. Copie o token da resposta para a variavel maria_token no
+            Base Environment."
+          sortKey: -6000
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "maria@fiap.com.br",
+              "senha": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/login"
+        name: Login - Joao
+        meta:
+          id: req_31850726174849f8b789f838150da319
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: Copie o token da resposta para a variavel joao_token no Base
+            Environment.
+          sortKey: -5900
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "joao@fiap.com.br",
+              "senha": "123456"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/login"
+        name: Login - Admin (seed)
+        meta:
+          id: req_a36cb78b962b45208af03b5a0c75dfd3
+          created: 1789596537848
+          modified: 1789596537848
+          isPrivate: false
+          description: Usuario ADMIN criado pela migration V2__seed_admin.sql. Copie o
+            token para admin_token.
+          sortKey: -5800
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "admin@campusgigs.com",
+              "senha": "admin123"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.base_url }}/login"
+        name: "Login - Senha errada (esperado: 401)"
+        meta:
+          id: req_f5851fb98da54e1cb8017eb40c0183de
+          created: 1789596537848
+          modified: 1789599407136
+          isPrivate: false
+          description: "Autenticacao e Autorizacao (JWT + Roles): credenciais invalidas
+            devem ser rejeitadas."
+          sortKey: -5700
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "email": "maria@fiap.com.br",
+              "senha": "senha-errada"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_2d78114de488478a7c18b749189a41e001ff2066
+    created: 1789599359225
+    modified: 1789599359225
+environments:
+  name: Base Environment
+  meta:
+    id: env_96d1a279966f485f859641d30f40be58
+    created: 1789596537848
+    modified: 1789596537848
+    isPrivate: false
+  data:
+    base_url: http://localhost:8080
+    maria_token: ""
+    joao_token: ""
+    admin_token: ""
+    servico_id: 1
+    servico_encerrado_id: 2
