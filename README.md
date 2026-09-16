@@ -11,7 +11,9 @@ Security com autenticação JWT utilizando chaves RSA**.
 
 # 👥 Integrantes
 
-- (preencher)
+- João Vitor Biribilli - RM565594
+- Pietro Paranhos Wilhelm - RM561378
+- Gabriel Neris Losano - RM564093
 
 ---
 
