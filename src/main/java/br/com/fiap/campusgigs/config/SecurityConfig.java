@@ -49,7 +49,7 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService,
-                                                              PasswordEncoder passwordEncoder) {
+                                                            PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
@@ -99,6 +99,11 @@ public class SecurityConfig {
                         // Listar serviços publicados é uma consulta pública.
                         .requestMatchers(HttpMethod.GET, "/servicos", "/servicos/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        // Qualquer exceção não tratada por um controller resulta num forward
+                        // interno do Tomcat para "/error", que passa de novo pela cadeia de
+                        // segurança. Sem essa liberação, esse forward era barrado com 401
+                        // (mascarando o erro real) mesmo em rotas públicas como POST /usuarios.
+                        .requestMatchers("/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 // Sem httpBasic: /login recebe email/senha em JSON e autentica manualmente
