@@ -1,0 +1,730 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-09-17T00:30:00.000Z",
+  "__export_source": "insomnia.desktop.app:v8.0.0",
+  "resources": [
+    {
+      "_id": "wrk_campusgigs",
+      "_type": "workspace",
+      "parentId": null,
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "name": "CampusGigs API - Projeto Diamante",
+      "description": "Coleção baseada nos requisitos funcionais, regras de autorização e tratamento de erros do PDF do Projeto Diamante.\n\nValidada ponta a ponta em 2026-09-17 contra a API rodando via docker compose. Os 22 requests, nesta ordem, retornam exatamente os status descritos em cada nome/descrição (201 cadastro, 400 violação de regra de negócio/validação de CEP/e-mail duplicado, 401 sem token ou credenciais inválidas, 403 acesso negado por papel).\n\nIMPORTANTE - antes de rodar a suite inteira, resete o banco para IDs prev√≠sí­veis:\n  docker compose down -v\n  docker compose up --build\nOs valores servico_id=1 e servico_encerrado_id=2 no Base Environment só ficam corretos em banco limpo, pois dependem da ordem: 'Publicar Servico - Maria' roda antes de 'Publicar Servico auxiliar'. Se rodar fora de ordem ou sem resetar o banco, atualize esses dois valores manualmente com os ids retornados pelas respostas de publicação.\n\nApós cada 'Login', copie apenas o valor de 'token' (sem aspas, sem o prefixo Bearer) para a variável correspondente em Base Environment.",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "parentId": "wrk_campusgigs",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:8080",
+        "maria_token": "",
+        "joao_token": "",
+        "admin_token": "",
+        "servico_id": 1,
+        "servico_encerrado_id": 2
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "maria_token",
+          "joao_token",
+          "admin_token",
+          "servico_id",
+          "servico_encerrado_id"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1789596537848
+    },
+    {
+      "_id": "fld_00",
+      "_type": "request_group",
+      "parentId": "wrk_campusgigs",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "name": "00 - Cadastro (Requisitos Funcionais)",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -6000
+    },
+    {
+      "_id": "fld_01",
+      "_type": "request_group",
+      "parentId": "wrk_campusgigs",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "name": "01 - Autenticacao (JWT)",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -5000
+    },
+    {
+      "_id": "fld_02",
+      "_type": "request_group",
+      "parentId": "wrk_campusgigs",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "name": "02 - Servicos (Publicar / Listar / Editar / Encerrar)",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -4000
+    },
+    {
+      "_id": "fld_03",
+      "_type": "request_group",
+      "parentId": "wrk_campusgigs",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "name": "03 - Contratacoes",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -3000
+    },
+    {
+      "_id": "fld_04",
+      "_type": "request_group",
+      "parentId": "wrk_campusgigs",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "name": "04 - Cenarios de erro (evidencia - autorizacao e regras de negocio)",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -2000
+    },
+    {
+      "_id": "req_cad_maria",
+      "_type": "request",
+      "parentId": "fld_00",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/usuarios",
+      "name": "Cadastrar Usuario - Maria",
+      "description": "Requisitos Funcionais: 'Cadastrar um novo usuario (com senha)'. Publico. Dispara a integracao ViaCEP (Integracao Externa - HttpExchange). Confirmado: 201.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -6000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Maria Souza\",\n  \"email\": \"maria@fiap.com.br\",\n  \"senha\": \"123456\",\n  \"cep\": \"01310930\"\n}"
+      }
+    },
+    {
+      "_id": "req_cad_joao",
+      "_type": "request",
+      "parentId": "fld_00",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/usuarios",
+      "name": "Cadastrar Usuario - Joao",
+      "description": "Segundo usuario, necessario para testar contratacao (ninguem pode contratar o proprio servico). Confirmado: 201.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -5900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Joao Pereira\",\n  \"email\": \"joao@fiap.com.br\",\n  \"senha\": \"123456\",\n  \"cep\": \"20040020\"\n}"
+      }
+    },
+    {
+      "_id": "req_cad_cep_invalido",
+      "_type": "request",
+      "parentId": "fld_00",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/usuarios",
+      "name": "Cadastrar Usuario - CEP invalido (confirmado: 400)",
+      "description": "Integracao Externa - HttpExchange: CEP inexistente deve retornar erro claro (400), sem salvar cadastro incompleto. Confirmado: 400 com {\"message\":\"CEP não encontrado: 00000000\"}.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -5800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Teste CEP\",\n  \"email\": \"teste.cep@fiap.com.br\",\n  \"senha\": \"123456\",\n  \"cep\": \"00000000\"\n}"
+      }
+    },
+    {
+      "_id": "req_cad_email_duplicado",
+      "_type": "request",
+      "parentId": "fld_00",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/usuarios",
+      "name": "Cadastrar Usuario - Email duplicado (confirmado: 400)",
+      "description": "Rode depois de 'Cadastrar Usuario - Maria'. Regra de negocio: nao pode haver dois usuarios com o mesmo e-mail. Confirmado: 400 com {\"message\":\"Já existe um usuário cadastrado com este e-mail\"}.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -5700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Maria Souza\",\n  \"email\": \"maria@fiap.com.br\",\n  \"senha\": \"123456\",\n  \"cep\": \"01310930\"\n}"
+      }
+    },
+    {
+      "_id": "req_login_maria",
+      "_type": "request",
+      "parentId": "fld_01",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/login",
+      "name": "Login - Maria",
+      "description": "Requisitos Funcionais: 'Autenticar um usuario e obter um token de acesso'. Confirmado: 200. Copie APENAS o valor de 'token' (sem aspas, sem 'Bearer ') para a variavel maria_token no Base Environment.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -6000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"maria@fiap.com.br\",\n  \"senha\": \"123456\"\n}"
+      }
+    },
+    {
+      "_id": "req_login_joao",
+      "_type": "request",
+      "parentId": "fld_01",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/login",
+      "name": "Login - Joao",
+      "description": "Confirmado: 200. Copie APENAS o valor de 'token' (sem aspas, sem 'Bearer ') para a variavel joao_token no Base Environment.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -5900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"joao@fiap.com.br\",\n  \"senha\": \"123456\"\n}"
+      }
+    },
+    {
+      "_id": "req_login_admin",
+      "_type": "request",
+      "parentId": "fld_01",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/login",
+      "name": "Login - Admin (seed)",
+      "description": "Usuario ADMIN criado pela migration V2__seed_admin.sql. Confirmado: 200. Copie o token para admin_token.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -5800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@campusgigs.com\",\n  \"senha\": \"admin123\"\n}"
+      }
+    },
+    {
+      "_id": "req_login_senha_errada",
+      "_type": "request",
+      "parentId": "fld_01",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/login",
+      "name": "Login - Senha errada (confirmado: 401)",
+      "description": "Autenticacao e Autorizacao (JWT + Roles): credenciais invalidas devem ser rejeitadas. Confirmado apos correcao: 401 com {\"message\":\"E-mail ou senha inválidos\"}. Antes da correcao, esse cenario retornava 500 (BadCredentialsException sem handler dedicado sendo capturada pelo catch-all generico).",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -5700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"maria@fiap.com.br\",\n  \"senha\": \"senha-errada\"\n}"
+      }
+    },
+    {
+      "_id": "req_publicar_servico",
+      "_type": "request",
+      "parentId": "fld_02",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos",
+      "name": "Publicar Servico - Maria",
+      "description": "Requisitos Funcionais: 'Publicar um servico (freela)'. Qualquer usuario autenticado pode publicar. Confirmado: 201, id=1 em banco limpo. Guarde o id retornado em servico_id.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.maria_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -6000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Aulas de Calculo I\",\n  \"descricao\": \"Reforco para provas e listas\",\n  \"categoria\": \"Tutoria\",\n  \"preco\": 50.0\n}"
+      }
+    },
+    {
+      "_id": "req_publicar_servico_encerrar_teste",
+      "_type": "request",
+      "parentId": "fld_02",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos",
+      "name": "Publicar Servico auxiliar (para encerrar depois)",
+      "description": "Servico auxiliar so para o cenario 'contratar servico encerrado'. Confirmado: 201, id=2 em banco limpo. Guarde o id em servico_encerrado_id e depois encerre ele.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.maria_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -5950,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Design de Logo\",\n  \"descricao\": \"Criacao de identidade visual simples\",\n  \"categoria\": \"Design\",\n  \"preco\": 80.0\n}"
+      }
+    },
+    {
+      "_id": "req_listar_servicos",
+      "_type": "request",
+      "parentId": "fld_02",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos",
+      "name": "Listar Servicos (publico)",
+      "description": "Requisitos Funcionais: 'Listar os servicos publicados'. Nao exige token. Confirmado: 200.",
+      "method": "GET",
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -5900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_editar_servico",
+      "_type": "request",
+      "parentId": "fld_02",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos/{{ _.servico_id }}",
+      "name": "Editar Servico - Maria (dona)",
+      "description": "Autenticacao e Autorizacao: 'Um usuario so edita ou encerra os proprios servicos'. Confirmado: 200.",
+      "method": "PUT",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.maria_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -5800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Aulas de Calculo I e II\",\n  \"descricao\": \"Reforco para provas e listas, agora com Calculo II\",\n  \"categoria\": \"Tutoria\",\n  \"preco\": 60.0\n}"
+      }
+    },
+    {
+      "_id": "req_encerrar_servico_auxiliar",
+      "_type": "request",
+      "parentId": "fld_02",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos/{{ _.servico_encerrado_id }}/encerrar",
+      "name": "Encerrar Servico auxiliar - Maria",
+      "description": "Encerra o servico auxiliar de Design de Logo, usado depois no cenario 'contratar servico encerrado'. Confirmado: 200.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.maria_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -5700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_encerrar_servico_dono",
+      "_type": "request",
+      "parentId": "fld_02",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos/{{ _.servico_id }}/encerrar",
+      "name": "Encerrar Servico - Maria (dona)",
+      "description": "Regras de Negocio: dono pode encerrar seu proprio servico. Rode por ultimo, depois de testar contratacao. Confirmado: 200.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.maria_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -5600,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_encerrar_servico_admin",
+      "_type": "request",
+      "parentId": "fld_02",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos/{{ _.servico_id }}/encerrar",
+      "name": "Encerrar Servico - Admin (qualquer um)",
+      "description": "Autenticacao e Autorizacao: 'excecao um ADMIN, que pode encerrar qualquer um'. Alternativa ao request anterior (so funciona se o servico ainda estiver ATIVO). Confirmado: 200.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.admin_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -5500,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_contratar_sucesso",
+      "_type": "request",
+      "parentId": "fld_03",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos/{{ _.servico_id }}/contratacoes",
+      "name": "Contratar Servico - Joao (sucesso)",
+      "description": "Requisitos Funcionais: 'Contratar um servico (usuario autenticado)'. Joao nao e o dono, entao deve funcionar (201). Confirmado: 201.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.joao_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -6000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_erro_sem_token",
+      "_type": "request",
+      "parentId": "fld_04",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos",
+      "name": "Publicar Servico sem token (confirmado: 401)",
+      "description": "Autenticacao e Autorizacao: 'Um usuario nao autenticado nao acessa nenhuma operacao que altera dados'. Confirmado: 401.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -6000,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Servico sem autenticacao\",\n  \"descricao\": \"Nao deveria ser criado\",\n  \"categoria\": \"Teste\",\n  \"preco\": 10.0\n}"
+      }
+    },
+    {
+      "_id": "req_erro_token_invalido",
+      "_type": "request",
+      "parentId": "fld_04",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos",
+      "name": "Publicar Servico com token invalido (confirmado: 401)",
+      "description": "Token corrompido/invalido deve ser rejeitado (401), nao 500. Confirmado: 401.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "token-invalido-de-propositoxyz",
+        "disabled": false
+      },
+      "metaSortKey": -5900,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"titulo\": \"Servico com token invalido\",\n  \"descricao\": \"Nao deveria ser criado\",\n  \"categoria\": \"Teste\",\n  \"preco\": 10.0\n}"
+      }
+    },
+    {
+      "_id": "req_erro_encerrar_nao_dono",
+      "_type": "request",
+      "parentId": "fld_04",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos/{{ _.servico_id }}/encerrar",
+      "name": "Encerrar Servico - Joao (nao-dono, nao-ADMIN) (confirmado: 403)",
+      "description": "Autenticacao e Autorizacao: acesso negado por papel. Essa e a evidencia pedida na secao Entrega do PDF ('incluindo um caso de acesso negado por papel'). Confirmado: 403 com {\"message\":\"Você não tem permissão para realizar esta operação\"}.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.joao_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -5800,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_erro_contratar_proprio",
+      "_type": "request",
+      "parentId": "fld_04",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos/{{ _.servico_id }}/contratacoes",
+      "name": "Contratar o proprio servico - Maria (confirmado: 400)",
+      "description": "Autenticacao e Autorizacao: 'Um usuario nao pode contratar o proprio servico'. Confirmado: 400 com {\"message\":\"Você não pode contratar o próprio serviço\"}.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.maria_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -5700,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_erro_contratar_encerrado",
+      "_type": "request",
+      "parentId": "fld_04",
+      "modified": 1789596537848,
+      "created": 1789596537848,
+      "url": "{{ _.base_url }}/servicos/{{ _.servico_encerrado_id }}/contratacoes",
+      "name": "Contratar servico encerrado (confirmado: 400)",
+      "description": "Regras de Negocio: 'Tentar contratar um servico que nao esta ativo deve ser rejeitado'. Rode depois de encerrar o servico auxiliar. Confirmado: 400 com {\"message\":\"Este serviço não está ativo e não pode ser contratado\"}.",
+      "method": "POST",
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.joao_token }}",
+        "disabled": false
+      },
+      "metaSortKey": -5600,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    }
+  ]
+}
