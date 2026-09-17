@@ -3,6 +3,7 @@ package br.com.fiap.campusgigs.validation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -74,14 +75,14 @@ public class ValidationHandler {
     }
 
     @ExceptionHandler(BusinessException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handle(BusinessException exception) {
         log.warn("Violação de regra de negócio: {}", exception.getMessage());
         return new ErrorResponse(exception.getMessage());
     }
 
     @ExceptionHandler(CepNotFoundException.class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handle(CepNotFoundException exception) {
         log.warn("Erro ao consultar CEP: {}", exception.getMessage());
         return new ErrorResponse(exception.getMessage());
@@ -92,6 +93,16 @@ public class ValidationHandler {
     public ErrorResponse handle(AccessDeniedException exception) {
         log.warn("Acesso negado: {}", exception.getMessage());
         return new ErrorResponse("Você não tem permissão para realizar esta operação");
+    }
+
+    // AuthenticationManager.authenticate() (chamado manualmente no AuthController)
+    // lança essa exceção dentro do próprio controller - sem esse handler específico,
+    // ela caía no catch-all genérico abaixo e virava 500 em vez de 401.
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse handle(AuthenticationException exception) {
+        log.warn("Falha de autenticação: {}", exception.getMessage());
+        return new ErrorResponse("E-mail ou senha inválidos");
     }
 
     // Rede de segurança: qualquer exceção não mapeada acima ainda recebe uma
